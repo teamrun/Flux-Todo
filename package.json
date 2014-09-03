@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "start": "gulp wd",
-    "build": "NODE_ENV=production gulp"
+    "build": "gulp"
   },
   "keywords": [
     "todoMVC",
@@ -21,8 +21,10 @@
     "envify": "^3.0.0",
     "gulp": "^3.8.7",
     "gulp-browserify": "^0.5.0",
+    "gulp-cond": "0.0.2",
     "gulp-plumber": "^0.6.5",
     "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.1",
     "gulp-util": "^3.0.1",
     "react": "^0.11.1",
     "reactify": "^0.14.0",

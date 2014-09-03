@@ -3,6 +3,8 @@ var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');
 var liveReload = require('gulp-livereload');
 var browserSync = require('browser-sync');
+var uglify = require('gulp-uglify');
+var cond = require('gulp-cond');
 
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
@@ -20,9 +22,17 @@ function errHandler(err){
     console.log('\tstack: ', err.stack);
 }
 
+var productTasks = [undefined, 'default'];
+var proEnv = false;
 
 var bundleTask;
 bundleTask = 'bundle-gulp-browserify';
+
+var taskName = (process.argv[0] === 'node')? process.argv[2] : process.argv[1];
+if( productTasks.indexOf(taskName) >= 0 ){
+    proEnv = true;
+}
+
 
 
 gulp.task('bundle-browserify', function(){
@@ -34,6 +44,7 @@ gulp.task('bundle-browserify', function(){
     .pipe(source('bundle.js')) //this converts to stream, string param is the new name of the file stream
      //do all processing here.
      //like uglification and so on.
+     .pipe( cond(proEnv, uglify()) )
     .pipe(gulp.dest('./js'));
 });
 
@@ -45,6 +56,7 @@ gulp.task('bundle-gulp-browserify', function(){
             transform: [reactify, envify]
         }))
         .pipe(rename('bundle.js'))
+        .pipe( cond(proEnv, uglify()) )
         .pipe(gulp.dest('./js'));
 });
 
