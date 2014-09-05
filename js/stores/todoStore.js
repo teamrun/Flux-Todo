@@ -143,12 +143,14 @@ AppDispatcher.register(function(payload){
             break;
         case TodoConstants.CLEAR_COMPLETED:
             clearCompleted();
+            break;
         case TodoConstants.TODO_COMPLETE_ALL:
             // 没有全部完成的话, 就全部置为true
             // 都完成了的话, 全部置为false
             updateAll( {
                 complete: !TodoStore.isAllComplete() 
             });
+            break;
         default:
             console.log('no store handler registed on this action: ', action.actionType)
             break;
